@@ -1,0 +1,398 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6f3eb"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-CYK/F7AN9JBj3/2wHM1GbaS3D9iwqBeuOiOBV7iZjek='; style-src 'sha256-kbq4/k9Qpqxv8fRy7eRu2B0GQsng6MgDIUZvhXfjJlA='; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><link rel="icon" href="data:,"><style>
+:root{font-size:100%;--ink:#413c34;--paper:#fffefa;--brown:#735640;--line:#d6ccbd;--green:#38694e;--amber:#79551e}
+*{box-sizing:border-box}
+body{margin:0;background:#f6f3eb;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.65;overflow-wrap:anywhere}
+header,nav,main,#notice{width:min(900px,calc(100% - 32px));margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.brand{display:flex;gap:12px;align-items:center;font-weight:750;font-size:1.15rem;letter-spacing:.06em}.book{width:25px;height:30px;background:#735640;border-radius:3px 6px 6px 3px;border-left:5px double #fffefa;transform:rotate(-4deg)}
+nav,.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}nav{padding:10px 0;gap:4px;border-bottom:1px solid var(--line)}nav:empty{display:none}nav button{background:transparent;border-color:transparent}nav [aria-current=page]{background:#eae1d3;color:#493629}
+main{padding:22px 0 max(54px,env(safe-area-inset-bottom));outline:none}
+h1,h2,h3,p{margin:0 0 .55em}h1{font-size:1.7rem;line-height:1.45}h2{font-size:1.22rem;margin:1.25em 0 .55em}h3{font-size:1.08rem}.muted,small,.meta{color:#60594e}.meta{font-size:.9rem}.date{font-size:.95rem;margin-bottom:16px}
+.card,fieldset,details{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:10px 0}.hero{border-left:5px solid var(--brown);padding:clamp(18px,4vw,32px)}.hero h2{margin:.25em 0 .4em;font-size:1.55rem}.hero .primary{margin-top:12px}.row>*{min-width:0}
+button,select,input,textarea{font:inherit;color:inherit;max-width:100%}
+button,select,input:not([type=checkbox]),textarea{min-height:44px;border:1px solid #8b8074;border-radius:8px;padding:7px 13px;background:var(--paper)}
+button{cursor:pointer;white-space:normal;font-weight:550;line-height:1.45}button:hover{background:#efe9df}.primary,button[aria-pressed=true]{background:var(--brown);border-color:var(--brown);color:white}.primary:hover,button[aria-pressed=true]:hover{background:#5b432f}.success{color:var(--green)}.danger{color:#973d36}.warn{color:var(--amber)}
+button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,textarea:focus-visible{outline:3px solid #735640;outline-offset:3px}
+.banner,.choice{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;width:100%;margin:6px 0}.banner{background:#eae1d3;border-color:transparent}.banner.warn{background:#f5e6ca}.choice{border-color:var(--line);padding:12px 16px}.count{white-space:nowrap}
+label{display:block;margin:.7em 0}label>input:not([type=checkbox]),label>select,label>textarea{display:block;width:100%;margin-top:4px}textarea{min-height:75px}.check{min-height:44px;display:flex;gap:8px;align-items:center}input[type=checkbox]{height:20px;width:20px}
+summary{cursor:pointer;font-weight:650;min-height:44px;align-content:center}details{padding:8px 16px}details details{margin:5px 0}
+progress{display:block;width:min(100%,360px);height:10px;accent-color:var(--green);margin:6px 0 10px}.tag{display:inline-block;background:#eee7dc;color:#574331;border-radius:6px;padding:2px 8px;font-size:.87rem;margin-right:8px}
+#notice:not(:empty){background:#fff5db;border-left:4px solid #926523;padding:10px;margin-top:10px}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;text-align:center;margin:12px 0}.calendar button{font-weight:500;padding:3px 1px;min-width:0}.calendar small{display:block;font-size:.72rem;color:inherit}.calendar .today{border:2px solid var(--brown)}
+.rank{display:flex;align-items:center;gap:12px}.rank .text{flex:1}.rank strong{font-size:1.12rem}.selected{border-left:4px solid var(--brown)}.tools{margin:14px 0}.item{border-top:1px solid var(--line);padding:12px 0}.note{border-left:3px solid #a28c6e;padding-left:12px}.sectionlabel{font-size:.85rem;letter-spacing:.05em;font-weight:650;color:#685542}button[hidden]{display:none}
+@media(max-width:520px){header,nav,main,#notice{width:calc(100% - 20px)}nav button{padding:7px 8px}.card,.hero{padding:14px}.rank{flex-wrap:wrap}.rank .text{min-width:55%}.calendar{gap:1px}.calendar small{font-size:.65rem}}
+
+#questionBox { color:var(--ink); background:var(--paper); border:1px solid #8b8074; border-radius:12px; padding:20px; width:min(28rem,90%); max-height:85vh; overflow:auto; }
+#questionBox::backdrop { background:rgba(45,38,29,.45); }
+#questionText { white-space:pre-wrap; }
+
+#questionField[hidden]{display:none}
+
+</style><title>課題サポート</title></head><body><header><div class="brand"><span class="book" aria-hidden="true"></span>課題サポート</div><button id="settings" data-a="settings" hidden>設定</button></header><nav aria-label="主な画面"></nav><div id="notice" role="status"></div><main id="main" tabindex="-1">手帳を開いています。この表示が続く場合は、埋め込みコードの全文と、JavaScriptが実行できる設定かを確認してください。</main><dialog id="questionBox" aria-labelledby="questionText"><p id="questionText"></p><label id="questionField" hidden>新しい教科名<input id="questionValue" type="text"></label><div class="row"><button type="button" id="questionCancel">キャンセル</button><button type="button" class="primary" id="questionOK">確定する</button></div></dialog><script>
+'use strict';
+const Model = (() => {
+  const app = 'jp.task-support', version = 1;
+  const reasons = ['課題の内容が分からない','進め方が分からない','自分一人では難しい','必要な教材・道具がない','期限までに終わりそうにない','その他・直接相談したい'];
+  const sets = {middle:'国語 社会 数学 理科 音楽 美術 保健体育 技術・家庭 英語', high:'国語 地理歴史 公民 数学 理科 保健体育 芸術 外国語 家庭 情報',custom:''};
+  const uid = () => 'u'+Array.from(crypto.getRandomValues(new Uint32Array(4)),n=>n.toString(16).padStart(8,'0')).join('');
+  const now = () => new Date().toISOString();
+  function day(d=new Date()) { return [String(d.getFullYear()).padStart(4,'0'),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-'); }
+  function shift(date,n) {const d=new Date(date+'T12:00:00'); d.setDate(d.getDate()+n); return day(d);}
+  function empty(){return {ready:false,subjects:[],tasks:[],notes:[],order:[],manual:false,settings:{size:0,next:true,interval:7,exported:null}};}
+  const subject=name=>({id:uid(),name,hidden:false});
+  const step=(name='')=>({id:uid(),name,plan:'',start:null,done:null,hold:null});
+  const task=()=>({...step(),subject:'',due:'',original:'',created:now(),info:'',method:'',steps:[],events:[],resumed:'',status:'未提出',receipt:null});
+  const complete=t=>t.steps.length?t.steps.every(i=>i.done):!!t.done;
+  const active=t=>t.status==='未提出'&&!complete(t);
+  const overdue=(t,d)=>t.status==='未提出'&&t.due<d;
+  const first=t=>t.steps.find(i=>!i.done);
+  function reason(t,d){if(!active(t))return t.status==='未提出'?'完了・未提出':t.status;
+    if(overdue(t,d)&&t.resumed!==t.due)return '期限超過・対応未決定';
+    if(t.hold)return '課題全体を保留中';
+    const i=first(t); if(i?.hold)return '次の手順を保留中';
+    if(i?.plan>d)return '予定日 '+i.plan; return '';}
+  function sorted(s,d){if(s.manual){const byId=new Map(s.tasks.map(t=>[t.id,t]));return s.order.map(id=>byId.get(id));}
+    return [...s.tasks].sort((a,b)=>Number(overdue(a,d)&&a.resumed===a.due)-Number(overdue(b,d)&&b.resumed===b.due)||a.due.localeCompare(b.due)||a.created.localeCompare(b.created)||a.id.localeCompare(b.id));}
+  function insert(s,t,end=false){s.order=s.order.filter(id=>id!==t.id);
+    const index=end?-1:s.order.findIndex(id=>s.tasks.find(x=>x.id===id).due>t.due);
+    s.order.splice(index<0?s.order.length:index,0,t.id);}
+  function later(s,id,d){const all=sorted(s,d),eligible=all.filter(t=>!reason(t,d)),p=eligible.findIndex(t=>t.id===id);
+    if(p<0||p+1===eligible.length)return false;
+    s.order=all.map(t=>t.id);const a=s.order.indexOf(id),b=s.order.indexOf(eligible[p+1].id);
+    [s.order[a],s.order[b]]=[s.order[b],s.order[a]];s.manual=true;return eligible[p+1].id;}
+  const review=(t,h,d)=>h.check<=d||[d,shift(d,1)].includes(t.due);
+  function event(t,type,detail=''){t.events.push({type,detail,at:now()});}
+  function hold(t,i,check,d){i.hold={since:i.hold?.since||d,check};event(t,'保留・確認日設定',i.name+' ／ '+check);}
+  function release(t,i){i.hold=null;event(t,'保留解除',i.name);}
+  function consult(s,t,i,r,d){const n={id:uid(),task:t.id,item:i===t?'':i.id,subject:s.subjects.find(x=>x.id===t.subject).name,title:t.name,step:i===t?'':i.name,due:t.due,deleted:false,reason:r,state:'未相談',events:[]};
+    noteState(n,'未相談','相談登録');s.notes.push(n);if(!i.hold&&!i.done&&active(t))hold(t,i,shift(d,1),d);}
+  function noteState(n,state,type){n.state=state;n.events.push({at:now(),type,state});}
+  function submit(t,status,d){t.status=status;t.receipt=status==='未提出'?null:{at:now(),day:d,due:t.due};event(t,status,t.due);}
+  function deadline(s,t,value,recovery){if(t.due===value)return;event(t,'期限変更',t.due+' → '+value);
+    t.due=value;t.resumed=t.events.some(e=>e.type==='期限後に再開'&&e.detail===value)?value:'';if(recovery&&s.manual)insert(s,t);}
+  function resume(s,t){if(t.resumed===t.due)return;t.resumed=t.due;event(t,'期限後に再開',t.due);if(s.manual)insert(s,t,true);}
+  function clone(t){const n=task();for(const k of ['subject','name','info','method'])n[k]=t[k];n.steps=t.steps.map(i=>step(i.name));return n;}
+  function validDate(v){return typeof v==='string'&&/^\d{4}-\d\d-\d\d$/.test(v)&&day(new Date(v+'T12:00:00'))===v;}
+  function validate(s){
+    const fail=()=>{throw Error('データの形式・日付・IDまたは参照関係に誤りがあります。');};
+    const ok=v=>{if(!v)fail();}, str=v=>ok(typeof v==='string'), name=v=>{str(v);ok(v.trim().length);}, bool=v=>ok(typeof v==='boolean'), date=v=>ok(validDate(v));
+    const stamp=v=>ok(typeof v==='string'&&/^\d{4}-\d\d-\d\dT/.test(v)&&isFinite(Date.parse(v))&&new Date(v).toISOString()===v);
+    const ids=new Set(), id=v=>{ok(typeof v==='string'&&/^u[0-9a-f]{32}$/.test(v)&&!ids.has(v));ids.add(v);};
+    const arr=v=>ok(Array.isArray(v)), unique=a=>ok(new Set(a).size===a.length);
+    function base(i){id(i.id);name(i.name);if(i.start!==null)stamp(i.start);if(i.done!==null)stamp(i.done);
+      if(i.hold!==null){date(i.hold.since);date(i.hold.check);ok(i.hold.check>i.hold.since);}}
+    ok(Object.keys(s).every(k=>['ready','manual','subjects','tasks','notes','order','settings'].includes(k)));
+    bool(s.ready);bool(s.manual);[s.subjects,s.tasks,s.notes,s.order].forEach(arr);
+    const subjects=new Set();for(const x of s.subjects){id(x.id);name(x.name);bool(x.hidden);subjects.add(x.id);}unique(s.subjects.map(x=>x.name.trim()));
+    const tasks=new Map();for(const t of s.tasks){base(t);ok(subjects.has(t.subject));tasks.set(t.id,t);date(t.due);date(t.original);stamp(t.created);str(t.info);str(t.method);
+      ok(!t.resumed?t.resumed==='':t.resumed===t.due);ok(['未提出','提出済み','提出不要'].includes(t.status));
+      if(t.status==='未提出')ok(t.receipt===null);else{stamp(t.receipt.at);date(t.receipt.day);date(t.receipt.due);}
+      arr(t.events);for(const e of t.events){name(e.type);str(e.detail);stamp(e.at);}
+      arr(t.steps);for(const i of t.steps){base(i);ok(i.plan===''||(validDate(i.plan)&&i.plan<=t.due));}}
+    unique(s.order);ok(s.order.length===tasks.size&&s.order.every(k=>tasks.has(k)));
+    const states=['未相談','相談済み・未解決','解決済み'];
+    for(const n of s.notes){id(n.id);name(n.title);name(n.subject);str(n.step);date(n.due);bool(n.deleted);
+      ok(/^u[0-9a-f]{32}$/.test(n.task)&&(n.item===''||/^u[0-9a-f]{32}$/.test(n.item)));
+      ok(typeof n.task==='string'&&typeof n.item==='string');
+      const t=tasks.get(n.task);ok(n.deleted===!(t&&(!n.item||t.steps.some(i=>i.id===n.item))));
+      ok(reasons.includes(n.reason)&&states.includes(n.state));arr(n.events);ok(n.events.length&&n.events.at(-1).state===n.state);
+      n.events.forEach(e=>{stamp(e.at);name(e.type);ok(states.includes(e.state));});}
+    const p=s.settings;ok([0,1,2].includes(p.size)&&[0,7,14,30].includes(p.interval));bool(p.next);if(p.exported!==null)stamp(p.exported);
+    ok(s.ready||(!s.tasks.length&&!s.subjects.length&&!s.notes.length));return s;
+  }
+  const pack=(s,time=now())=>({app,version,exported:time,data:s});
+  function unpack(raw){const b=JSON.parse(raw);if(b?.app!==app||b.version!==version)throw Error('このアプリの対応版のバックアップを選んでください。');
+    if(typeof b.exported!=='string'||!isFinite(Date.parse(b.exported))||new Date(b.exported).toISOString()!==b.exported)throw Error('書出し日時が不正です。');validate(b.data);return b;}
+  return {app,version,sets,reasons,uid,now,day,shift,empty,subject,step,task,complete,active,overdue,first,reason,sorted,insert,later,review,event,hold,release,consult,noteState,submit,deadline,resume,clone,validDate,validate,pack,unpack};
+})();
+if(typeof module!=='undefined')module.exports=Model;
+
+'use strict';
+const Storage = (() => {
+ let db,rev=0;
+ async function open(){await new Promise((resolve,reject)=>{
+   const req=indexedDB.open('task-support-notebook',1);
+   req.onupgradeneeded=()=>req.result.createObjectStore('notebook');
+   req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('別のタブを閉じてください。'));
+   req.onsuccess=()=>{db=req.result;db.onversionchange=()=>db.close();resolve();};
+ });return read();}
+ function read(){return new Promise((resolve,reject)=>{
+   const q=db.transaction('notebook').objectStore('notebook').get('current');
+   q.onerror=()=>reject(q.error);q.onsuccess=()=>{try{const r=q.result;
+     if(r&&r.version!==Model.version)throw Error('未対応の保存形式です。データは保持されています。');
+     const s=r?Model.validate(r.data):Model.empty();rev=r?.rev||0;resolve(s);}catch(e){reject(e);}};
+ });}
+ function save(data){Model.validate(data);return new Promise((resolve,reject)=>{
+   const tx=db.transaction('notebook','readwrite'),store=tx.objectStore('notebook'),q=store.get('current');let conflict=false;
+   q.onsuccess=()=>{if((q.result?.rev||0)!==rev){conflict=true;tx.abort();return;}
+     store.put({version:Model.version,rev:rev+1,data},'current');};
+   tx.oncomplete=()=>{rev++;resolve();};tx.onabort=()=>reject(Error(conflict?'別のタブで変更されました。入力内容を控え、再読み込みしてください。':'空き容量とブラウザの保存設定を確認してください。'));
+ });}
+ return {open,read,save};
+})();
+
+'use strict';
+const M=Model, $=q=>document.querySelector(q), main=$('main'),today=()=>M.day();
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cp=v=>JSON.parse(JSON.stringify(v));
+let s,page='home',tid='',iid='',dirty=false,busy=false,pending=null,draft=null,editMode='',rank=[],autoRank=false;
+let historyView=false,calendar=false,plans=false,sort='期限順',selected=today(),month=selected.slice(0,7),resolved=false,related='',dateSeen=today(),restore=null;
+const task=()=>s.tasks.find(t=>t.id===tid), subj=t=>s.subjects.find(x=>x.id===t.subject)?.name||'教科未設定';
+const target=(t,id)=>id?t.steps.find(i=>i.id===id):t;
+const b=(a,label,id='',item='',cls='')=>'<button type="button" data-a="'+a+'" data-id="'+esc(id)+'" data-item="'+esc(item)+'" class="'+cls+'">'+esc(label)+'</button>';
+const opt=(v,label,current)=>'<option value="'+esc(v)+'" '+(String(v)===String(current)?'selected':'')+'>'+esc(label)+'</option>';
+const card=html=>'<section class="card">'+html+'</section>', row=(...els)=>'<div class="row">'+els.join('')+'</div>';
+const heading=t=>'<h1>'+esc(t)+'</h1>', empty=t=>'<p class="muted">'+esc(t)+'</p>';
+const fmt=v=>v?new Date(v).toLocaleString('ja-JP'):'まだありません';
+function say(msg){$('#notice').textContent=msg;}
+
+function question(message, initialValue) {
+  const box = document.getElementById('questionBox');
+  const input = document.getElementById('questionValue');
+  const editing = initialValue !== undefined;
+  const previous = document.activeElement;
+  document.getElementById('questionText').textContent = message;
+  document.getElementById('questionField').hidden = !editing;
+  input.value = editing ? initialValue : '';
+  document.getElementById('questionOK').textContent = editing ? '変更する' : '確定する';
+  return new Promise(resolve => {
+    const finish = accepted => {
+      box.close();
+      box.oncancel = null;
+      box.onkeydown = null;
+      document.getElementById('questionCancel').onclick = null;
+      document.getElementById('questionOK').onclick = null;
+      if (previous?.isConnected) previous.focus();
+      resolve(editing ? (accepted ? input.value : undefined) : accepted);
+    };
+    box.oncancel = event => { event.preventDefault(); finish(false); };
+    box.onkeydown = event => {
+      if (editing && event.target === input && event.key === 'Enter' && !event.isComposing) {
+        event.preventDefault(); finish(true);
+      }
+    };
+    document.getElementById('questionCancel').onclick = () => finish(false);
+    document.getElementById('questionOK').onclick = () => finish(true);
+    box.showModal();
+    if (editing) { input.focus(); input.select(); }
+    else document.getElementById('questionCancel').focus();
+  });
+}
+
+async function go(p,id='',item='',force=false){if(!force&&(dirty||pending)&&!await question('保存していない変更を破棄しますか？'))return false;
+  dirty=false;pending=null;restore=null;page=p;tid=id;iid=item;say('');render();main.focus();window.scrollTo(0,0);return true;}
+async function commit(change,after){if(busy)return;busy=true;
+  try{const next=cp(s);change(next);await Storage.save(next);s=next;pending=null;dirty=false;say('');after?after():render();}
+  catch(e){pending=()=>commit(change,after);$('#notice').innerHTML=esc('保存できませんでした。'+e.message)+' '+b('retry','再試行');}
+  finally{busy=false;}}
+const dueLine=t=>'提出期限 '+t.due+(M.overdue(t,today())?' ｜ '+(t.resumed===t.due?'期限超過・再開済み':'期限超過・対応未決定'):'');
+const progress=t=>t.steps.length?t.steps.filter(i=>i.done).length+' / '+t.steps.length+' 項目完了':(t.done?'✓ 完了':t.start?'取り組み中':'未着手');
+const bar=t=>'<div class="meta">'+esc(progress(t))+'</div>'+(t.steps.length?'<progress aria-label="課題全体の進捗" max="'+t.steps.length+'" value="'+t.steps.filter(i=>i.done).length+'"></progress>':'');
+function badges(t){const list=[t.status==='未提出'&&M.complete(t)?'✓ 完了・未提出':t.status];
+  if(t.receipt){list.push((t.status==='提出済み'?'提出日 ':'記録日 ')+t.receipt.day);if(t.status==='提出済み'&&t.receipt.day>t.receipt.due)list.push('期限後提出');}
+  if(t.hold||t.steps.some(i=>i.hold))list.push('保留あり');if(s.notes.some(n=>n.task===t.id&&n.state!=='解決済み'))list.push('相談あり');
+  return list.map(esc).join(' ｜ ');}
+const taskCard=t=>card('<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div><h3>'+esc(t.name)+'</h3>'+bar(t)+'<p class="meta">'+badges(t)+'</p>'+b('detail','詳細を開く',t.id));
+function holds(){return s.tasks.flatMap(t=>[t,...t.steps].filter(i=>i.hold&&t.status==='未提出').map(i=>({t,i,h:i.hold,review:M.review(t,i.hold,today())}))).sort((a,b)=>Number(b.review)-Number(a.review)||a.h.check.localeCompare(b.h.check));}
+const readyTasks=()=>M.sorted(s,today()).filter(t=>!M.reason(t,today()));
+function home(){const rec=readyTasks(),h=holds(),reviews=h.filter(x=>x.review);
+  const banner=(p,label,n,w=false)=>n?'<button class="banner '+(w?'warn':'')+'" data-a="'+p+'">'+label+'<span class="count">'+n+'件 ›</span></button>':'';
+  const top=rec[0],i=top&&M.first(top);
+  let body=heading('ホーム')+'<p class="date">'+new Date().toLocaleDateString('ja-JP',{month:'long',day:'numeric',weekday:'long'})+'</p>'+
+    banner('submitList','提出する課題があります',s.tasks.filter(t=>t.status==='未提出'&&M.complete(t)).length)+
+    banner('notes','相談したい事項があります',s.notes.filter(n=>n.state==='未相談').length)+
+    banner('late','期限を過ぎた課題があります',s.tasks.filter(t=>M.overdue(t,today())).length,true)+
+    banner('holds',reviews.length?'確認したい保留中の課題':'保留中の課題',new Set((reviews.length?reviews:h).map(x=>x.t.id)).size,!!reviews.length);
+  body+='<h2>まず取り組むこと</h2>';
+  if(top){body+='<section class="card hero"><div><span class="tag">'+esc(subj(top))+'</span><span class="meta">'+esc(dueLine(top))+'</span></div>'+(i?'<p class="meta">'+esc(top.name)+'</p>':'')+'<h2>'+esc(i?.name||top.name)+'</h2>'+bar(top)+planText(i)+b('start','取り組む',top.id,i?.id,'primary')+'</section>';
+    if(s.settings.next&&rec.length>1){body+='<h2>その次に取り組むこと</h2>'+rec.slice(1,3).map(t=>b('start',subj(t)+'　'+(M.first(t)?.name||t.name)+'　›',t.id,M.first(t)?.id,'choice')).join('');}}
+  else {const hints=[];if(h.length)hints.push('保留一覧で、再開できそうな課題を確認できます。');
+    if(s.tasks.some(t=>M.active(t)&&M.first(t)?.plan>today()))hints.push('これからの予定はカレンダーで確認できます。');
+    if(s.tasks.some(t=>M.complete(t)&&t.status==='未提出'))hints.push('完了した課題は、提出後に記録しましょう。');
+    if(s.tasks.some(t=>M.overdue(t,today())))hints.push('期限を過ぎた課題は、次の進め方を選べます。');
+    if(s.notes.some(n=>n.state!=='解決済み'))hints.push('相談したいことは「先生に聞く」で確認できます。');
+    body+=card(!s.tasks.length?'<h3>最初の課題を登録しましょう</h3>'+b('new','課題を登録する','','','primary'):empty(hints.join(' ')||'現在取り組む課題はありません。'));}
+  return body+b('list','課題一覧で別の課題を選ぶ');}
+function planText(i){return i?.plan?'<p class="'+(i.plan<today()&&!i.done?'warn':'meta')+'">予定日 '+i.plan+(i.plan<today()&&!i.done?' ｜ 計画を見直してみましょう':'')+'</p>':'';}
+function setup(){return heading('教科を選ぶ')+'<p>はじめに、使う教科を準備しましょう。教科名や順番はあとから変更できます。</p>'+row(b('set','中学校セット','middle'),b('set','高等学校セット','high'),b('set','自分で設定','custom'))+ '<h2>以前のデータを使う</h2>'+importInput();}
+function subjects(){return heading('教科・科目の設定')+'<label>追加する教科名<input id="subjectName"></label>'+b('addSubject','追加する')+s.subjects.map((x,k)=>card('<h3>'+esc(x.name)+(x.hidden?'（非表示）':'')+'</h3>'+row(b('rename','改名',x.id),b('subjectUp','↑ 上へ',x.id),b('subjectDown','↓ 下へ',x.id),b('visibility',x.hidden?'再表示':'非表示',x.id),b('delSubject','削除',x.id,'','danger')))).join('')+row(b('home','ホームへ','','','primary'),b('new','課題を登録する'));}
+function list(){let ts=(sort==='優先順'?M.sorted(s,today()):[...s.tasks]).filter(t=>(t.status!=='未提出')===historyView);
+  if(sort!=='優先順')ts.sort((a,b)=>(sort==='教科別'?s.subjects.findIndex(x=>x.id===a.subject)-s.subjects.findIndex(x=>x.id===b.subject):0)||a.due.localeCompare(b.due)||a.created.localeCompare(b.created));
+  return heading('課題一覧')+row(b('new','＋ 課題を登録','','','primary'),b('rank','優先順の調整'))+'<div class="tools">'+row(toggle('current','現在の課題',!historyView),toggle('history','履歴',historyView),toggle('listMode','リスト',!calendar),toggle('calMode','カレンダー',calendar))+'</div>'+
+   (calendar?cal(ts):'<label>表示順<select id="sort">'+['期限順','優先順','教科別'].map(v=>opt(v,v,sort)).join('')+'</select></label>'+(ts.map(taskCard).join('')||empty(historyView?'履歴はまだありません。':'登録されている課題はありません。')));}
+function toggle(a,label,on){return '<button data-a="'+a+'" aria-pressed="'+on+'">'+label+'</button>';}
+function cal(ts){const first=month+'-01',date=new Date(first+'T12:00:00'),count=new Date(date.getFullYear(),date.getMonth()+1,0).getDate();
+  const events=new Map();function add(key,t,label){if(!events.has(key))events.set(key,[]);events.get(key).push({t,label});}
+  ts.forEach(t=>{add(t.due,t,'期限');if(plans)t.steps.filter(i=>i.plan).forEach(i=>add(i.plan,t,'予定 '+i.name));});
+  let grid='日月火水木金土'.split('').map(v=>'<strong>'+v+'</strong>').join('')+'<span></span>'.repeat(date.getDay());
+  for(let j=1;j<=count;j++){const key=month+'-'+String(j).padStart(2,'0'),ev=events.get(key)||[],n=ev.filter(e=>e.label==='期限').length;
+    grid+='<button data-a="day" data-id="'+key+'" aria-label="'+key+' 期限'+n+'件 予定'+(ev.length-n)+'件" aria-pressed="'+(key===selected)+'" class="'+(key===today()?'today':'')+'">'+j+(n?'<small>◆'+n+'</small>':'')+(ev.length>n?'<small>○'+(ev.length-n)+'</small>':'')+'</button>';}
+  return '<h2>'+month.replace('-','年')+'月</h2>'+row(b('prev','前の月'),b('today','今日'),b('nextMonth','次の月'))+'<label class="check"><input id="plans" type="checkbox" '+(plans?'checked':'')+'>取り組む予定日も表示</label><div class="meta">◆ 提出期限　 ○ 取り組む予定</div><div class="calendar">'+grid+'</div><h2>'+selected+' の課題</h2>'+((events.get(selected)||[]).map(e=>'<p class="sectionlabel">'+esc(e.label)+'</p>'+taskCard(e.t)).join('')||empty('この日の課題はありません。'));}
+function procedures(t){return t.steps.length?'<details><summary>課題全体の手順を確認する（'+t.steps.length+'項目）</summary>'+t.steps.map((i,k)=>'<div class="item"><strong>'+esc((k+1)+'. '+i.name)+'</strong><div class="meta">'+(i.done?'✓ 完了':i.start?'取り組み中':'未着手')+(i.hold?' ｜ 保留中':'')+(s.notes.some(n=>n.item===i.id&&n.state==='未相談')?' ｜ 未相談':'')+'</div>'+planText(i)+
+    (i.done?b('undoDone','完了を取り消す',t.id,i.id):t.status==='未提出'?b('start','この手順を選ぶ',t.id,i.id):'')+'</div>').join('')+'</details>':'';}
+const noteCount=(id,item)=>s.notes.filter(n=>n.task===id&&(!item||n.item===item)).length;
+function detail(t){return heading(t.name)+'<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div>'+card(bar(t)+'<p>'+badges(t)+'</p>'+(t.info?'<p>補足　'+esc(t.info)+'</p>':'')+(t.method?'<p>提出方法　'+esc(t.method)+'</p>':'')+
+  (t.receipt?'<p>記録日時　'+fmt(t.receipt.at)+'<br>記録時の期限　'+t.receipt.due+'</p>':'')+
+  row(M.active(t)?b('start','取り組む',t.id,M.first(t)?.id,'primary'):'',!t.steps.length&&t.done?b('undoDone','完了を取り消す',t.id):'',t.status==='未提出'?b('submit',M.complete(t)?'提出しました':'未完成で提出を記録',t.id):b('unsubmit',t.status+'を取り消す',t.id)))+
+  procedures(t)+row(M.overdue(t,today())?b('late','期限への対応を選ぶ'):'',t.hold||t.steps.some(i=>i.hold)?b('holds','保留を確認'):'',M.active(t)?b('ask','先生に聞く',t.id):'',b('related','関連する相談（'+noteCount(t.id)+'件）',t.id))+
+  '<details><summary>期限と操作の履歴</summary><p>当初の期限　'+t.original+'</p>'+t.events.slice().reverse().map(e=>'<p>'+esc(fmt(e.at)+'　'+e.type+'　'+e.detail)+'</p>').join('')+'</details>'+row(b('edit','課題を編集',t.id),b('copy','複製',t.id),b('delete','課題を削除',t.id,'','danger'));}
+function work(t){const i=target(t,iid)||M.first(t)||t,blocked=!!(t.hold||i.hold||!M.active(t)||(M.overdue(t,today())&&t.resumed!==t.due));
+  return b('detail','‹ 課題の詳細',t.id)+heading(t.name)+'<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div>'+bar(t)+
+  '<section class="card hero"><div class="sectionlabel">今取り組むこと'+(i!==t?'　'+(t.steps.indexOf(i)+1)+' / '+t.steps.length:'')+'</div><h2>'+esc(i.name)+'</h2>'+planText(i)+(i.plan&&i.plan<today()&&!i.done?b('planAsk','計画の見直しを相談',t.id,i.id):'')+(t.info?'<p>'+esc(t.info)+'</p>':'')+
+  (blocked?empty(M.reason(t,today())||(i.hold?'この手順は保留中です。':'状態を確認してください。'))+row(b('detail','状態を確認',t.id),i.hold||t.hold?b('holds','保留を見直す'):'',M.overdue(t,today())?b('late','期限への対応'):''):b('done','✓ できた',t.id,i===t?'':i.id,'primary'))+'</section>'+
+  row(b('later','今は後にする',t.id),b('hold','一時保留する',t.id,i===t?'':i.id),b('ask','先生に聞く',t.id,i===t?'':i.id))+
+  '<p class="meta">後にすると順番が一つ下がります。保留にすると、再開するまで推薦から外れます。</p>'+procedures(t);}
+const field=(label,id,value,type='text',extra='')=>'<label>'+label+'<input type="'+type+'" id="'+id+'" value="'+esc(value)+'" '+extra+'></label>';
+function editor(){const t=draft;return heading(editMode==='edit'?'課題を編集':editMode==='copy'?'複製して登録':'課題を登録')+'<form id="editor"><section class="card"><label>教科（必須）<select id="subject" required>'+opt('','選んでください',t.subject)+s.subjects.filter(x=>!x.hidden||(editMode==='edit'&&x.id===t.subject)).map(x=>opt(x.id,x.name+(x.hidden?'（非表示）':''),t.subject)).join('')+'</select></label>'+field('課題名（必須）','title',t.name,'text','required')+field('提出期限（必須）','due',t.due,'date','required')+'</section><details id="extras"><summary>補足・提出方法・手順を設定する</summary><label>補足<textarea id="info">'+esc(t.info)+'</textarea></label><label>提出方法<textarea id="method">'+esc(t.method)+'</textarea></label><h2>課題の手順</h2><div id="steps"></div>'+b('addStep','＋ 手順を追加')+'<details><summary>ページ範囲から手順を作る</summary>'+field('開始ページ','p1','','number','min="1"')+field('終了ページ','p2','','number','min="1"')+b('generate','手順を生成')+'</details></details>'+row('<button type="submit" class="primary">保存する</button>',b('cancel','キャンセル'))+'</form>';}
+function stepRows(){const box=$('#steps');if(!box)return;box.innerHTML=draft.steps.map((i,k)=>'<section class="item" data-step="'+i.id+'">'+field('手順 '+(k+1),'name_'+i.id,i.name,'text','required')+field('取り組む予定日','plan_'+i.id,i.plan,'date')+row(b('stepUp','↑ 上へ',i.id),b('stepDown','↓ 下へ',i.id),b('removeStep','手順を削除',i.id,'','danger'))+'</section>').join('');}
+function capture(){if(!$('#editor'))return;Object.assign(draft,{subject:$('#subject').value,name:$('#title').value.trim(),due:$('#due').value,info:$('#info').value.trim(),method:$('#method').value.trim()});
+  draft.steps.forEach(i=>{i.name=$('#name_'+i.id).value.trim();i.plan=$('#plan_'+i.id).value;});}
+function openEdit(t,mode){if(!s.subjects.some(x=>!x.hidden)&&mode!=='edit'){go('subjects');say('登録に使う教科を追加するか、再表示してください。');return;}
+  draft=mode==='new'?M.task():mode==='copy'?M.clone(t):cp(t);if(mode==='copy'&&s.subjects.find(x=>x.id===draft.subject)?.hidden)draft.subject='';
+  editMode=mode;go('editor',t?.id);}
+function invalid(el,msg){el.closest('details')?.setAttribute('open','');el.setCustomValidity(msg);el.reportValidity();el.focus();el.setCustomValidity('');}
+async function saveEditor(){capture();const t=cp(draft),old=editMode==='edit'?task():null;
+  if(!t.name)return invalid($('#title'),'課題名を入力してください。');
+  for(const i of t.steps){if(!i.name)return invalid($('#name_'+i.id),'手順を入力してください。');if(i.plan&&(!M.validDate(i.plan)||i.plan>t.due))return invalid($('#plan_'+i.id),'予定日を提出期限以前に修正するか、空にしてください。');}
+  if(t.due<today()&&(!old||old.due!==t.due)&&!await question('過去の提出期限です。期限を過ぎた課題として保存しますか？'))return;
+  if(old&&Boolean(old.steps.length)!==Boolean(t.steps.length)&&!await question(t.steps.length?'追加した手順の完了数から、課題全体の進捗を判定します。保存しますか？':'全手順を削除し、課題を未完了にします。相談履歴は残ります。保存しますか？'))return;
+  await commit(n=>{if(old){if(Boolean(old.steps.length)!==Boolean(t.steps.length))t.done=null;
+    const newDue=t.due;t.due=old.due;M.deadline(n,t,newDue,false);
+    n.tasks[n.tasks.findIndex(x=>x.id===t.id)]=t;
+    n.notes.filter(note=>note.task===t.id&&note.item&&!t.steps.some(i=>i.id===note.item)).forEach(note=>note.deleted=true);
+  }else{t.original=t.due;t.created=M.now();n.tasks.push(t);M.insert(n,t);}},()=>{go('detail',t.id,'',true);if(old&&s.manual&&old.due!==t.due)say('期限を変更しました。必要に応じて優先順を調整できます。');});}
+function targetSelect(t){return '<label>対象<select id="target">'+opt('','課題全体',iid)+t.steps.filter(i=>!i.done||i.id===iid).map(i=>opt(i.id,i.name,iid)).join('')+'</select></label>';}
+function holdForm(t){const cont=page==='continueHold',i=target(t,iid);
+  return heading(cont?'保留を続ける':'一時保留する')+card('<h3>'+esc(t.name)+'</h3>'+esc(dueLine(t))+(cont?'<p>対象　'+esc(i===t?'課題全体':i.name)+'</p>':targetSelect(t))+field('次に保留を見直す日','checkDate',M.shift(today(),1),'date','min="'+M.shift(today(),1)+'"')+'<p class="meta">進捗・提出期限・予定日はそのままです。確認日に、自分で再開するか決められます。</p>'+row(b('saveHold',cont?'確認日を更新':'保留にする',t.id,'','primary'),b('cancel','キャンセル')));}
+function holdList(){const entries=holds();return heading('保留中')+'<p>保留中の課題 '+new Set(entries.map(e=>e.t.id)).size+'件</p>'+ (entries.map(({t,i,h,review})=>card((review?'<p class="warn">◇ 見直しの時期です</p>':'')+'<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div><h3>'+esc(t.name)+'</h3><p>対象　'+esc(i===t?'課題全体':i.name)+'</p>'+bar(t)+'<p>保留開始 '+h.since+'　確認日 '+h.check+'</p>'+row(b('release','取り組めるようになった',t.id,i===t?'':i.id),b('continueHold','まだ取り組めない',t.id,i===t?'':i.id),b('ask','先生に相談したい',t.id,i===t?'':i.id),M.overdue(t,today())?b('late','期限への対応'):''))).join('')||empty('保留中の課題はありません。'));}
+function ask(t){return heading('先生に聞く')+card('<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div><h3>'+esc(t.name)+'</h3>'+targetSelect(t)+'<label>相談したいこと<select id="reason">'+M.reasons.map(r=>opt(r,r,'')).join('')+'</select></label><p>先生と会って話すためのメモです。先生には送信されません。</p><p class="meta">対象を保留にします。新しく保留する場合の確認日は '+M.shift(today(),1)+' です。</p>'+row(b('saveNote','相談事項に追加',t.id,'','primary'),b('cancel','キャンセル')));}
+function notes(){const ns=s.notes.filter(n=>(n.state==='解決済み')===resolved&&(!related||n.task===related)).slice().reverse();
+  return heading('先生に聞く')+'<p>先生と一緒に画面を見ながら、相談したいことを確認できます。</p>'+row(toggle('unresolved','相談事項',!resolved),toggle('resolved','解決済み',resolved),related?b('notes','すべての相談を表示'):'')+
+  (ns.map(n=>{const t=s.tasks.find(t=>t.id===n.task),step=t&&target(t,n.item);
+    return card('<div class="meta">'+esc(n.deleted?n.subject:subj(t))+'　提出期限 '+esc(t?.due||n.due)+'</div><h3>'+esc(n.deleted?n.title:t.name)+'</h3><p>'+esc(n.deleted?n.step||'課題全体':n.item?step.name:'課題全体')+(n.deleted?'（対象削除済み）':'')+'</p><p>'+esc(n.reason)+'</p><strong>'+esc(n.state)+'</strong>'+
+    row(...(n.state==='未相談'?['相談して解決した','相談したが、まだ困っている','自分で解決した']:n.state==='解決済み'?['もう一度相談する']:['解決した']).map(a=>b('noteState',a,n.id,a)),t?b('detail','関連する課題',t.id):'',step?.hold||t?.hold?b('holds','保留を確認'):'')+
+    '<details><summary>相談履歴</summary>'+n.events.map(e=>'<p>'+esc(fmt(e.at)+'　'+e.type)+'</p>').join('')+'</details>');}).join('')||empty('該当する相談はありません。'));}
+function submissions(){return heading('提出するもの')+(s.tasks.filter(t=>t.status==='未提出'&&M.complete(t)).map(t=>card('<div class="meta">'+esc(subj(t))+'　'+esc(dueLine(t))+'</div><h3>'+esc(t.name)+'</h3><p>✓ 完了・未提出</p>'+(t.method?'<p>提出方法　'+esc(t.method)+'</p>':'')+row(b('submit','提出しました',t.id,'','primary'),b('detail','詳細',t.id)))).join('')||empty('提出待ちの課題はありません。'));}
+function late(){return heading('期限を過ぎた課題')+(s.tasks.filter(t=>M.overdue(t,today())).map(t=>card('<div class="meta">'+esc(subj(t))+'　当初の期限 '+t.original+'</div><h3>'+esc(t.name)+'</h3><p class="warn">'+esc(dueLine(t))+'</p>'+bar(t)+'<p>'+badges(t)+'</p>'+row(t.resumed!==t.due&&M.active(t)?b('resume','引き続き取り組む',t.id):'',b('newDue','新しい提出期限を設定',t.id),b('ask','先生に相談する',t.id),M.active(t)?b('hold','一時保留する',t.id):'',b('waive','提出不要になった',t.id),b('submit','提出しました',t.id),b('detail','詳細',t.id)))).join('')||empty('期限を過ぎた課題はありません。'));}
+function priority(){const byId=new Map(s.tasks.map(t=>[t.id,t]));return heading('優先順の調整')+'<p>矢印またはドラッグで並べ替え、保存してください。</p>'+rank.filter(id=>M.active(byId.get(id))).map((id,k)=>{const t=byId.get(id);return '<section class="card rank" draggable="true" data-rank="'+id+'"><strong>'+(k+1)+'</strong><div class="text">'+esc(t.name)+'<div class="meta">'+esc(subj(t)+'　'+dueLine(t))+'</div>'+esc(M.reason(t,today())||'推薦できます')+'</div>'+row(b('rankUp','↑ 上へ',id),b('rankDown','↓ 下へ',id))+'</section>';}).join('')+row(b('resetRank','期限順に戻す'),b('saveRank','順番を保存','','','primary'),b('cancel','キャンセル'));}
+function importInput(){return '<label>バックアップから復元<input type="file" id="import" accept=".json,application/json"></label><div id="preview"></div>';}
+function reminder(p,d){return p.interval>0&&(s.tasks.length+s.notes.length+s.subjects.length)>0&&(!p.exported||M.shift(M.day(new Date(p.exported)),p.interval)<=d);}
+function settings(){const p=s.settings;return heading('設定')+card('<h2>表示</h2><label>文字サイズ<select id="size">'+['標準','大きめ','特大'].map((v,k)=>opt(k,v,p.size)).join('')+'</select></label><label class="check"><input type="checkbox" id="showNext" '+(p.next?'checked':'')+'>次の候補も表示する</label>'+b('subjects','教科・科目の設定'))+
+  card('<h2>保存とバックアップ</h2><p>このブラウザに自動保存します。共有端末では、同じブラウザを使う人も内容を確認できます。</p><p class="meta">端末やサイトのデータを消去すると記録が失われます。定期的にファイルへ書き出してください。</p><label>バックアップの案内<select id="interval">'+[7,14,30,0].map(n=>opt(n,n?n+'日ごと':'表示しない',p.interval)).join('')+'</select></label>'+(reminder(p,today())?'<p class="note">バックアップを保存しておきましょう。</p>':'')+'<p>最終書出し日時　'+esc(fmt(p.exported))+'</p>'+b('export','バックアップを書き出す')+'<hr><p>復元すると現在の記録を置き換えます。先に今の記録を書き出しておけます。</p>'+importInput());}
+function render(){if(!s)return;document.documentElement.style.fontSize=['100%','118%','138%'][s.settings.size];
+  $('#settings').hidden=!s.ready;const nav=[['home','ホーム'],['list','課題一覧'],['holds','保留中'],['notes','先生に聞く']];
+  $('nav').innerHTML=s.ready?nav.map(([a,label])=>'<button data-a="'+a+'" '+(a===page?'aria-current="page"':'')+'>'+label+'</button>').join(''):'';
+  const views={setup,home,subjects,list,detail:()=>detail(task()),work:()=>work(task()),editor,rank:priority,hold:()=>holdForm(task()),continueHold:()=>holdForm(task()),holds:holdList,ask:()=>ask(task()),notes,submitList:submissions,late,settings,
+    newDue:()=>heading('新しい提出期限')+card('<h3>'+esc(task().name)+'</h3>'+field('先生に確認した提出期限','newDate','','date','min="'+today()+'"')+row(b('saveDue','期限を保存',tid,'','primary'),b('cancel','キャンセル')))};
+  main.innerHTML=views[page]();if(page==='editor')stepRows();}
+function move(a,id,delta,key=x=>x){const i=a.findIndex(x=>key(x)===id),j=i+delta;if(i>=0&&j>=0&&j<a.length)[a[i],a[j]]=[a[j],a[i]];}
+function rankMove(id,to){const active=rank.filter(k=>M.active(s.tasks.find(t=>t.id===k))),a=active.indexOf(id),b=active.indexOf(to);
+  if(a<0||b<0||a===b)return;active.splice(b,0,active.splice(a,1)[0]);let n=0;const keys=new Set(active);rank=rank.map(k=>keys.has(k)?active[n++]:k);autoRank=false;dirty=true;render();}
+function download(data,time){const url=URL.createObjectURL(new Blob([JSON.stringify(M.pack(data,time),null,2)],{type:'application/json'})),a=document.createElement('a'),d=new Date(time);
+  a.href=url;a.download='task_support_backup_'+M.day(d).replaceAll('-','')+'_'+[d.getHours(),d.getMinutes(),d.getSeconds()].map(v=>String(v).padStart(2,'0')).join('')+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+let importSequence=0;
+async function importFile(file){const sequence=++importSequence;restore=null;const panel=$('#preview');panel.textContent='';if(!file)return;
+  try{const backup=M.unpack(await file.text());if(!panel.isConnected||sequence!==importSequence)return;restore=backup;
+    panel.innerHTML=card('<h3>復元内容の確認</h3><p>書出し '+esc(fmt(backup.exported))+'<br>教科 '+backup.data.subjects.length+'件 ／ 課題 '+backup.data.tasks.length+'件 ／ 相談 '+backup.data.notes.length+'件</p><p>現在の課題 '+s.tasks.length+'件を含む、すべての記録を置き換えます。</p>'+row(b('restore','この内容で置き換える','','','danger'),b('cancelRestore','取り消す')));}
+  catch(e){if(panel.isConnected&&sequence===importSequence)panel.textContent='復元できません。'+e.message+' 現在の記録は保持されています。';}}
+async function act(a,id='',item=''){
+ if(busy)return;
+ const t=s.tasks.find(x=>x.id===id),i=t&&target(t,item);
+ const mutate=(fn,after)=>commit(n=>{const x=n.tasks.find(x=>x.id===id);fn(x,target(x,item),n);},after);
+ const back=(p,k='',j='')=>()=>go(p,k,j,true);
+ switch(a){
+ case 'retry':return pending?.();
+ case 'planAsk':if(await go('ask',id,item))$('#reason').value=M.reasons[4];return;
+ case 'home':case 'settings':case 'list':case 'holds':case 'submitList':case 'late':case 'subjects':return go(a);
+ case 'detail':case 'continueHold':case 'newDue':case 'hold':case 'ask':return go(a,id,item);
+ case 'notes':case 'related':related=a==='related'?id:'';resolved=false;return go('notes');
+ case 'set':return commit(n=>{n.ready=true;n.subjects=M.sets[id].split(' ').filter(Boolean).map(M.subject);},back('subjects'));
+ case 'new':case 'edit':case 'copy':return openEdit(t,a);
+ case 'cancel':return go(page==='rank'?'list':page==='continueHold'?'holds':page==='newDue'?'late':task()?'detail':'list',tid);
+ case 'addSubject':case 'rename':{
+   const x=s.subjects.find(v=>v.id===id),v=(x?await question('新しい教科名',x.name):$('#subjectName').value)?.trim();
+   if(v===undefined)return;if(!v)return say('教科名を入力してください。');
+   const same=s.subjects.find(y=>y.id!==id&&y.name===v);if(same)return say(same.hidden?'同じ名前の教科があります。「再表示」を選んでください。':'同じ名前の教科が登録されています。');
+   return commit(n=>{if(x)n.subjects.find(y=>y.id===id).name=v;else n.subjects.push(M.subject(v));});}
+ case 'visibility':case 'delSubject':{const used=s.tasks.some(v=>v.subject===id);
+   if(a==='delSubject'&&!await question(used?'課題で使用中のため非表示にします。既存の課題は残ります。':'この教科を削除しますか？'))return;
+   return commit(n=>{const x=n.subjects.find(v=>v.id===id);if(a==='visibility')x.hidden=!x.hidden;else if(used)x.hidden=true;else n.subjects=n.subjects.filter(v=>v.id!==id);});}
+ case 'subjectUp':case 'subjectDown':return commit(n=>move(n.subjects,id,a==='subjectUp'?-1:1,x=>x.id));
+ case 'addStep':case 'stepUp':case 'stepDown':case 'removeStep':case 'generate':{
+   capture();if(a==='addStep')draft.steps.push(M.step());
+   if(a==='removeStep'){const st=draft.steps.find(x=>x.id===id);
+    if(!await question('「'+st.name+'」を削除しますか？ '+(st.done?'完了済み':'未完了')+' ／ 関連相談 '+noteCount(draft.id,id)+'件。相談履歴は残ります。'))return;
+    draft.steps=draft.steps.filter(x=>x.id!==id);}
+   if(a==='stepUp'||a==='stepDown')move(draft.steps,id,a==='stepUp'?-1:1,x=>x.id);
+   if(a==='generate'){const p=Number($('#p1').value),q=Number($('#p2').value),count=q-p+1;
+     if(!Number.isSafeInteger(p)||p<1)return invalid($('#p1'),'1以上の整数を入力してください。');
+     if(!Number.isSafeInteger(q)||q<p||count>300)return invalid($('#p2'),'開始以上の整数を入力してください。一度に300ページまで生成できます。');
+     if(count>30&&!await question(count+'項目を生成しますか？'))return;
+     for(let k=0;k<count;k++)draft.steps.push(M.step('P'+(p+k)+'に取り組む'));}
+   dirty=true;stepRows();return;}
+ case 'delete':if(!await question('「'+t.name+'」を削除しますか？ 進捗：'+progress(t)+'。関連相談 '+noteCount(id)+'件は対象削除済みとして残ります。課題は元に戻せません。'))return;
+   return commit(n=>{n.tasks=n.tasks.filter(x=>x.id!==id);n.order=n.order.filter(k=>k!==id);n.notes.filter(v=>v.task===id).forEach(v=>v.deleted=true);},back('list'));
+ case 'current':case 'history':historyView=a==='history';return render();
+ case 'listMode':case 'calMode':calendar=a==='calMode';return render();
+ case 'day':selected=id;return render();
+ case 'today':selected=today();month=selected.slice(0,7);return render();
+ case 'prev':case 'nextMonth':{const d=new Date(month+'-01T12:00:00');d.setMonth(d.getMonth()+(a==='prev'?-1:1));selected=M.day(d);month=selected.slice(0,7);return render();}
+ case 'rank':rank=M.sorted(s,today()).map(x=>x.id);autoRank=!s.manual;return go('rank');
+ case 'rankUp':case 'rankDown':{const list=rank.filter(k=>M.active(s.tasks.find(t=>t.id===k)));return rankMove(id,list[list.indexOf(id)+(a==='rankUp'?-1:1)]);}
+ case 'resetRank':rank=M.sorted({...s,manual:false},today()).map(t=>t.id);autoRank=true;dirty=true;return render();
+ case 'saveRank':return commit(n=>{n.order=rank.slice();n.manual=!autoRank;},back('list'));
+ case 'start':{const current=i||M.first(t)||t,key=current===t?'':current.id;
+   if(t.hold||current.hold||(M.overdue(t,today())&&t.resumed!==t.due)||!M.active(t)||current.done)return go('work',id,key);
+   if(t.start&&current.start)return go('work',id,key);
+   return commit(n=>{const x=n.tasks.find(v=>v.id===id);x.start||=M.now();target(x,key).start||=M.now();},back('work',id,key));}
+ case 'done':if(!M.active(t)||t.hold||i.hold||i.done||(M.overdue(t,today())&&t.resumed!==t.due))return render();
+   return mutate((x,y)=>{
+     const at=M.now();x.start||=at;y.start||=at;y.done=at;
+     const next=M.first(x);
+     if(next&&!M.reason(x,today()))next.start||=at;
+   },()=>{const x=s.tasks.find(v=>v.id===id);
+     if(M.complete(x)){go('submitList','','',true);say('課題が完了しました。実際に提出したら記録しましょう。');}
+     else if(!M.reason(x,today()))go('work',id,M.first(x).id,true);
+     else{go('home','','',true);say('手順を完了しました。次に取り組める課題を確認しましょう。');}});
+ case 'undoDone':if(!await question('この完了を取り消しますか？ 提出状態は変わりません。'))return;
+   return mutate((x,y)=>{y.done=null;},back('detail',id));
+ case 'later':{const copy=cp(s),next=M.later(copy,id,today());if(!next)return say(M.reason(t,today())?'現在の推薦候補に含まれないため順番を変更できません。':'ほかに後にできる課題がありません。');
+   return commit(n=>{M.later(n,id,today());},()=>{go('home','','',true);say('順番を一つ下げました。次の候補は「'+s.tasks.find(x=>x.id===next).name+'」です。');});}
+ case 'saveHold':{const check=$('#checkDate').value,key=$('#target')?.value??iid;if(!M.validDate(check)||check<=today())return invalid($('#checkDate'),'明日以降の日付を選んでください。');
+   return commit(n=>{const x=n.tasks.find(v=>v.id===id);M.hold(x,target(x,key),check,today());},back(page==='continueHold'?'holds':'home'));}
+ case 'release':return mutate((x,y)=>M.release(x,y),()=>{render();say('保留を解除しました。'+(s.tasks.find(v=>v.id===id).steps.some(v=>v.hold)?'個別の手順に保留が残っています。':''));});
+ case 'saveNote':{const key=$('#target').value,r=$('#reason').value;return commit(n=>{const x=n.tasks.find(v=>v.id===id);M.consult(n,x,target(x,key),r,today());},back('home'));}
+ case 'unresolved':case 'resolved':resolved=a==='resolved';return render();
+ case 'noteState':return commit(n=>M.noteState(n.notes.find(x=>x.id===id),item==='もう一度相談する'?'未相談':item==='相談したが、まだ困っている'?'相談済み・未解決':'解決済み',item));
+ case 'submit':case 'waive':case 'unsubmit':{const status=a==='submit'?'提出済み':a==='waive'?'提出不要':'未提出';
+   if(a==='submit'&&!M.complete(t)&&!await question('未完了 '+(t.steps.length?t.steps.filter(v=>!v.done).length:1)+'件あります。進捗を保ったまま、実際に提出したことを記録しますか？'))return;
+   if(a==='waive'&&!await question('先生などに提出不要と確認しましたか？ 提出不要として履歴に移します。'))return;
+   if(a==='unsubmit'&&!await question(t.status+'を取り消し、未提出に戻しますか？'))return;
+   return mutate(x=>M.submit(x,status,today()),()=>{go('detail',id,'',true);say(status+'として記録しました。');});}
+ case 'resume':return mutate((x,y,n)=>M.resume(n,x),()=>{go('detail',id,'',true);say('期限後の取り組みを再開しました。'+(t.hold||t.steps.some(i=>i.hold)?'保留は別に解除できます。':''));});
+ case 'saveDue':{const val=$('#newDate').value;if(!M.validDate(val)||val<today())return invalid($('#newDate'),'今日以降の期限を入力してください。');
+   if(t.steps.some(i=>i.plan>val))return invalid($('#newDate'),'予定日が新期限より後です。課題の編集で予定日を修正してください。');
+   return mutate((x,y,n)=>M.deadline(n,x,val,true),back('detail',id));}
+ case 'export':{const time=M.now(),copy=cp(s);copy.settings.exported=time;download(copy,time);return commit(n=>{n.settings.exported=time;},()=>{render();say('書出しを開始しました。端末の保存先でファイルを確認してください。');});}
+ case 'cancelRestore':restore=null;return render();
+ case 'restore':{if(!restore||!await question('現在のすべての記録を置き換えます。復元しますか？'))return;
+   const data=cp(restore.data);return commit(n=>Object.assign(n,data),()=>{go(s.ready?'home':'setup','','',true);say('復元しました。');});}
+ }}
+document.addEventListener('click',e=>{const btn=e.target.closest('button[data-a]');if(btn)act(btn.dataset.a,btn.dataset.id,btn.dataset.item);});
+document.addEventListener('submit',e=>{e.preventDefault();if(e.target.id==='editor')saveEditor();});
+document.addEventListener('invalid',e=>{e.target.closest('details')?.setAttribute('open','');},true);
+document.addEventListener('input',e=>{if(['editor','hold','continueHold','ask','newDue'].includes(page))dirty=true;});
+document.addEventListener('change',e=>{const el=e.target;if(el.id==='import')importFile(el.files[0]);
+ if(el.id==='plans'){plans=el.checked;render();}if(el.id==='sort'){sort=el.value;render();}
+ if(['size','showNext','interval'].includes(el.id)){const key=el.id==='showNext'?'next':el.id,v=key==='next'?el.checked:Number(el.value);
+   commit(n=>{n.settings[key]=v;});}});
+let dragged='';
+document.addEventListener('dragstart',e=>{const el=e.target.closest('[data-rank]');if(el){dragged=el.dataset.rank;e.dataTransfer.setData('text/plain',dragged);}});
+document.addEventListener('dragover',e=>{if(dragged&&e.target.closest('[data-rank]'))e.preventDefault();});
+document.addEventListener('drop',e=>{const el=e.target.closest('[data-rank]');if(el&&dragged){e.preventDefault();rankMove(dragged,el.dataset.rank);}dragged='';});
+document.addEventListener('dragend',()=>dragged='');
+window.addEventListener('beforeunload',e=>{if(dirty||busy||pending){e.preventDefault();e.returnValue='';}});
+function refreshDate(){if(!s||dateSeen===today())return;dateSeen=today();if(!dirty&&!busy&&!restore&&!['editor','ask','hold','continueHold','newDue','rank','subjects'].includes(page))render();}
+document.addEventListener('visibilitychange',refreshDate);window.addEventListener('pageshow',refreshDate);setInterval(refreshDate,10000);
+Storage.open().then(data=>{s=data;page=s.ready?'home':'setup';render();}).catch(e=>{main.textContent='この画面では記録を保存できません。埋め込み枠での保存制限、ブラウザの設定、または保存データの形式を確認してください。入力を開始する前に、同じブラウザで公開済みのGoogleサイトを開き直してください。詳細：'+e.message;});
+
+</script></body></html>
